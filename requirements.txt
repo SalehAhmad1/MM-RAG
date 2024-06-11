@@ -1,5 +1,6 @@
 embedchain==0.1.108
 embedchain[weaviate]
+chromadb
 openai==1.33.0
 streamlit==1.28.2
 streamlit_audiorecorder==0.0.5
