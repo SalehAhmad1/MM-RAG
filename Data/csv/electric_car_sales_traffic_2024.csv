@@ -1,0 +1,73 @@
+Month,Region,Units Sold,Revenue (in million USD),Website Traffic (in million visits)
+January,North America,7732,103.93,3.65
+February,North America,15799,115.55,1.84
+March,North America,14845,154.64,4.16
+April,North America,8264,59.03,2.28
+May,North America,18123,150.02,4.46
+June,North America,9859,150.6,3.12
+July,North America,19019,81.56,4.47
+August,North America,14225,69.34,3.62
+September,North America,12891,97.31,3.76
+October,North America,9373,104.56,2.76
+November,North America,10874,135.53,4.8
+December,North America,19116,115.79,3.4
+January,Europe,19935,198.26,2.41
+February,Europe,11744,65.31,3.23
+March,Europe,8468,81.33,0.59
+April,Europe,19650,74.2,1.86
+May,Europe,5705,147.97,3.47
+June,Europe,7599,87.99,1.81
+July,Europe,15327,119.95,3.28
+August,Europe,7222,86.66,2.43
+September,Europe,12768,73.85,1.11
+October,Europe,7897,66.56,1.84
+November,Europe,14893,148.45,3.06
+December,Europe,5537,70.73,3.16
+January,Asia,16085,79.49,3.08
+February,Asia,11216,105.31,3.44
+March,Asia,11921,173.15,3.43
+April,Asia,11036,64.57,2.44
+May,Asia,7163,175.69,4.53
+June,Asia,10072,64.41,2.15
+July,Asia,9851,196.47,2.46
+August,Asia,12877,120.3,4.51
+September,Asia,7046,196.51,4.13
+October,Asia,6871,140.73,3.67
+November,Asia,12599,160.89,0.95
+December,Asia,7496,55.88,4.64
+January,South America,13291,92.42,3.71
+February,South America,15200,68.03,4.99
+March,South America,5755,94.42,1.17
+April,South America,5797,67.81,4.41
+May,South America,5659,97.7,1.23
+June,South America,8219,112.14,3.27
+July,South America,13615,59.62,1.06
+August,South America,12456,153.87,4.32
+September,South America,8337,134.99,4.13
+October,South America,7745,89.81,3.06
+November,South America,9735,128.49,2.33
+December,South America,13736,64.09,0.81
+January,Africa,11687,136.39,3.64
+February,Africa,5714,189.39,2.54
+March,Africa,7292,97.79,3.75
+April,Africa,13343,150.11,4.4
+May,Africa,15915,69.77,4.89
+June,Africa,19846,157.45,4.35
+July,Africa,16723,93.41,0.55
+August,Africa,16122,77.48,2.12
+September,Africa,6207,137.98,3.78
+October,Africa,11172,53.02,1.27
+November,Africa,13994,174.34,2.84
+December,Africa,15368,50.7,0.74
+January,Australia,15368,151.67,1.4
+February,Australia,15148,90.5,0.58
+March,Australia,12221,160.28,4.07
+April,Australia,11021,194.33,1.51
+May,Australia,8622,87.31,2.05
+June,Australia,8560,136.42,4.68
+July,Australia,13948,138.81,3.67
+August,Australia,17561,135.84,0.64
+September,Australia,19671,83.46,1.24
+October,Australia,17676,192.91,3.3
+November,Australia,6641,117.07,3.1
+December,Australia,16306,176.96,1.57

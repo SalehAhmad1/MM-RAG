@@ -17,7 +17,7 @@ from embedchain.helpers.callbacks import (StreamingStdOutCallbackHandlerYield, g
 
 SUPPORTED_FILE_TYPES = ["pdf", "docx", "csv", "jpeg", "jpg", "webp"]
 
-OpenAI_Api_Key = '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'
+OpenAI_Api_Key = st.secrets["OpenAI_Api_Key"]
 
 embedchain.config.llm.base.DOCS_SITE_DEFAULT_PROMPT = """
 You are an expert AI assistant for developer support product. Your responses must always be rooted in the context provided for each query. Wherever possible, give complete code snippet. Dont make up any code snippet on your own.
@@ -166,8 +166,8 @@ with st.sidebar:
         "Just paste your Google API key here and we'll use it to power the chatbot."
 
     if st.session_state.api_key:
-        os.environ["WEAVIATE_ENDPOINT"] = "https://dimitri-fsp2m585.weaviate.network"
-        os.environ["WEAVIATE_API_KEY"] = "Fnf6dw7CLFZBssWxTHK8mQiRjCBPqP2O9hoo"
+        os.environ["WEAVIATE_ENDPOINT"] = st.secrets["WEAVIATE_ENDPOINT"]
+        os.environ["WEAVIATE_API_KEY"] = st.secrets["WEAVIATE_API_KEY"]
         if api_provider == 'OpenAI':
             os.environ["OPENAI_API_KEY"] = st.session_state.api_key
         else:
