@@ -2,7 +2,7 @@ embedchain==0.1.108
 embedchain[weaviate]
 chromadb
 openai==1.33.0
-streamlit==1.28.2
+streamlit==1.30.0
 streamlit_audiorecorder==0.0.5
 openai
 google-generativeai==0.6.0
