@@ -1,12 +1,12 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import queue
 import tempfile
-import threading
-
-import warnings
 
 import streamlit as st
-from audiorecorder import audiorecorder
+from streamlit_mic_recorder import mic_recorder
+
 
 from openai import OpenAI
 
@@ -17,7 +17,8 @@ from embedchain.helpers.callbacks import (StreamingStdOutCallbackHandlerYield, g
 
 SUPPORTED_FILE_TYPES = ["pdf", "docx", "csv", "jpeg", "jpg", "webp"]
 
-OpenAI_Api_Key = st.secrets["OpenAI_Api_Key"]
+OpenAI_Api_Key = os.getenv("OpenAI_Api_Key")
+print(f'OpenAI_Api_Key: {OpenAI_Api_Key}')
 
 embedchain.config.llm.base.DOCS_SITE_DEFAULT_PROMPT = """
 You are an expert AI assistant for developer support product. Your responses must always be rooted in the context provided for each query. Wherever possible, give complete code snippet. Dont make up any code snippet on your own.
@@ -70,11 +71,10 @@ def embedchain_bot(db_path, api_key, api_provider):
             },
         }
         embedder_config = {
-            "provider": "google",
+            "provider": "openai",
             "config": {
-                "model": 'models/embedding-001',
-                "task_type": "retrieval_document",
-                "title": "chat-files"
+                "model": 'text-embedding-3-small',
+                "api_key": OpenAI_Api_Key
             }
         }
 
@@ -95,13 +95,13 @@ def get_db_path():
     return tmpdirname
 
 def get_ec_app(api_key, api_provider):
-    # if "app" in st.session_state:
-    #     print("Found app in session state")
-    #     app = st.session_state.app
-    # else:
-    print("Creating app")
-    db_path = get_db_path()
-    app = embedchain_bot(db_path, api_key, api_provider)
+    if "app" in st.session_state:
+        print("Found app in session state")
+        app = st.session_state.app
+    else:
+        print("Creating app")
+        db_path = get_db_path()
+        app = embedchain_bot(db_path, api_key, api_provider)
     st.session_state.app = app
     return app
 
@@ -142,11 +142,11 @@ def process_file(file, app):
 
 def transcribe_audio(api_key):
     client = OpenAI(api_key=api_key)
-    audio_file = open("./audio.wav", "rb")
-    transcription = client.audio.transcriptions.create(
+    with open('./audio.wav', 'rb') as audio_file:
+        transcription = client.audio.transcriptions.create(
         model="whisper-1",
-        file=audio_file
-    )
+        file=audio_file)
+    os.remove('./audio.wav')
     return transcription.text
 
 # Initialize chat history
@@ -166,8 +166,10 @@ with st.sidebar:
         "Just paste your Google API key here and we'll use it to power the chatbot."
 
     if st.session_state.api_key:
-        os.environ["WEAVIATE_ENDPOINT"] = st.secrets["WEAVIATE_ENDPOINT"]
-        os.environ["WEAVIATE_API_KEY"] = st.secrets["WEAVIATE_API_KEY"]
+        os.environ["WEAVIATE_ENDPOINT"] = os.getenv("WEAVIATE_ENDPOINT")
+        os.environ["WEAVIATE_API_KEY"] = os.getenv("WEAVIATE_API_KEY")
+        print(f'WEAVIATE_ENDPOINT: {os.getenv("WEAVIATE_ENDPOINT")}')
+        print(f'WEAVIATE_API_KEY: {os.getenv("WEAVIATE_API_KEY")}')
         if api_provider == 'OpenAI':
             os.environ["OPENAI_API_KEY"] = st.session_state.api_key
         else:
@@ -193,15 +195,27 @@ with st.sidebar:
             st.error(f"Error adding {file_name} to knowledge base: {e}")
             st.stop()
     st.session_state["add_files"] = add_files
-
-    audio = audiorecorder("Click to record", "Click to stop recording")
     
-    if len(audio) > 0:
-        audio.export("audio.wav", format="wav")
+    audio = mic_recorder(
+        start_prompt="Start recording",
+        stop_prompt="Stop recording",
+        just_once=True,
+        use_container_width=False,
+        format="wav",
+        callback=None,
+        args=(),
+        kwargs={},
+        key=None
+    )
+    if audio:
+        audio_bytes = audio['bytes']
+        with open('audio.wav', 'wb') as f:
+            f.write(audio_bytes)
+            f.close()   
         st.success("Audio recorded successfully!")
         transcription = transcribe_audio(api_key=OpenAI_Api_Key)
-        st.write("Audio Input:")
         st.session_state.audio_prompt = transcription
+        audio_bytes = None
 
 cols = st.columns([1, 2, 1])
 with cols[1]:
